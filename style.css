@@ -1,0 +1,267 @@
+/* ====== RESET ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ====== BACKGROUND ====== */
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top left, #92a7f9, #9604f8);
+  overflow: hidden;
+}
+
+/* Floating glowing circles for decoration */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: 0;
+}
+
+body::before {
+  width: 300px;
+  height: 300px;
+  background: #ff6ec4;
+  top: 10%;
+  left: 10%;
+}
+
+body::after {
+  width: 350px;
+  height: 350px;
+  background: #7873f5;
+  bottom: 10%;
+  right: 10%;
+}
+
+/* ====== GLASS CARD ====== */
+.container {
+  position: relative;
+  z-index: 1;
+  width: 80%;
+  max-width: 350px;
+  padding: 2.5rem 3rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: #090909;
+  animation: floatUp 1.2s ease forwards;
+}
+
+/* Float-up animation */
+@keyframes floatUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ====== HEADING ====== */
+.container h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #090909;
+  letter-spacing: 1px;
+}
+
+/* ====== INPUT FIELDS ====== */
+.container input {
+  width: 100%;
+  padding: 0.9rem;
+  margin: 0.7rem 0;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #0a0a0a;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+/* ====== PASSWORD TOGGLE ====== */
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-field input {
+  padding-right: 2.5rem; /* space for the eye icon */
+}
+
+.password-field .eye {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.1rem;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.password-field .eye:hover {
+  opacity: 1;
+}
+
+
+.container input::placeholder {
+  color: #eee;
+}
+
+
+.container input:focus {
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+.password-field img{
+  width: 20px;
+  cursor: pointer;
+}
+.password-box {
+  position: relative;
+}
+
+.password-box input {
+  width: 100%;
+  padding-right: 35px;
+}
+
+.password-box span {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.password-box img {
+  width: 20px;
+  height: 20px;
+}
+
+/* ====== SIGNUP BUTTON ====== */
+.container button {
+  width: 100%;
+  padding: 0.9rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #7b61ff, #5ae4a8);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.container button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(123, 97, 255, 0.5);
+}
+
+/* ====== LOGIN LINK ====== */
+.container p {
+  margin-top: 1rem;
+  color: #080808;
+  font-size: 0.95rem;
+}
+
+.container a {
+  color: #3903fb;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.container a:hover {
+  text-decoration: underline;
+}
+
+/* ====== GOOGLE BUTTON ====== */
+#google-btn {
+  width: 100%;
+  margin-top: 1.2rem;
+  padding: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #020202;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+#google-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.03);
+}
+
+#google-btn img {
+  width: 20px;
+  height: 20px;
+}
+h1 {
+  font-family: "Poppins", sans-serif;
+  color: #222;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+#user-email {
+  display: block;
+  color: #000;
+  font-weight: 600;
+  margin-top: 8px;
+  font-size: 16px;
+  
+}
+
+#logout-btn {
+  display: block;
+  margin: 0 auto;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: #2575fc;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+#logout-btn:hover {
+  background: #1a5ed9;
+  transform: scale(1.05);
+}
+
+
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 480px) {
+  .container {
+    padding: 2rem;
+  }
+  .container h1 {
+    font-size: 1.5rem;
+  }
+}
