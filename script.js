@@ -111,45 +111,44 @@ setupPasswordToggle("login-password", "togglePasswordLogin", "eye-icon-login");
 setupPasswordToggle("signup-password", "togglePasswordSignup", "eye-icon-signup");
 
 // github login
+// github login
 const githubProvider = new GithubAuthProvider();
 
-document.getElementById("github-btn").addEventListener("click", () => { 
-//   signInWithPopup(auth, githubProvider)
-//     .then((result) => {
-//         alert("user signed in");
-//         window.location.href = "welcome.html";
-//     })
-//    .catch((error) => {
-//     console.error("GitHub Login Error:", error);
-//     alert(error.message);
-// });
-
-// });
-
-function signInWithGithub() {
-  signInWithPopup(auth, githubProvider)
-    .catch(async (error) => {
-      if (error.code === 'auth/account-exists-with-different-credential') {
-        const email = error.customData.email;
-        const pendingCred = error.credential;
-
-        // Check kaun sa provider pehle use hua tha
-        const methods = await fetchSignInMethodsForEmail(auth, email);
-
-        if (methods.includes('google.com')) {
-          // User ko Google se login karwao
-          const result = await signInWithPopup(auth, googleProvider);
-
-          // Ab GitHub ko link kardo
-          await linkWithCredential(result.user, pendingCred);
-
-          alert("GitHub account linked successfully!");
-        }
-      } else {
-        console.error(error);
-      }
-    });
-}
+document.getElementById("github-btn")?.addEventListener("click", () => {
+  signInWithGithub();
 });
+
+async function signInWithGithub() {
+  try {
+    await signInWithPopup(auth, githubProvider);
+    alert("😊 GitHub Login Successful!");
+    window.location.href = "welcome.html";
+
+  } catch (error) {
+    if (error.code === 'auth/account-exists-with-different-credential') {
+      const email = error.customData.email;
+      const pendingCred = error.credential;
+
+      // Check previous provider
+      const methods = await fetchSignInMethodsForEmail(auth, email);
+
+      if (methods.includes("google.com")) {
+        // Sign in with Google
+        const googleLogin = await signInWithPopup(auth, provider);
+
+        // Link GitHub credential
+        await linkWithCredential(googleLogin.user, pendingCred);
+
+        alert("🎉 GitHub linked to your existing Google login!");
+        window.location.href = "welcome.html";
+      }
+
+    } else {
+      console.error(error);
+      alert(error.message);
+    }
+  }
+}
+
 
   
