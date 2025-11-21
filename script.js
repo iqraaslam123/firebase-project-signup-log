@@ -1,7 +1,8 @@
 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
   
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider , signOut ,onAuthStateChanged , GithubAuthProvider} 
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider , signOut ,onAuthStateChanged , GithubAuthProvider ,   fetchSignInMethodsForEmail,
+  linkWithCredential} 
 from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
 
@@ -113,16 +114,42 @@ setupPasswordToggle("signup-password", "togglePasswordSignup", "eye-icon-signup"
 const githubProvider = new GithubAuthProvider();
 
 document.getElementById("github-btn").addEventListener("click", () => { 
-  signInWithPopup(auth, githubProvider)
-    .then((result) => {
-        alert("user signed in");
-        window.location.href = "welcome.html";
-    })
-   .catch((error) => {
-    console.error("GitHub Login Error:", error);
-    alert(error.message);
-});
+//   signInWithPopup(auth, githubProvider)
+//     .then((result) => {
+//         alert("user signed in");
+//         window.location.href = "welcome.html";
+//     })
+//    .catch((error) => {
+//     console.error("GitHub Login Error:", error);
+//     alert(error.message);
+// });
 
+// });
+
+function signInWithGithub() {
+  signInWithPopup(auth, githubProvider)
+    .catch(async (error) => {
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        const email = error.customData.email;
+        const pendingCred = error.credential;
+
+        // Check kaun sa provider pehle use hua tha
+        const methods = await fetchSignInMethodsForEmail(auth, email);
+
+        if (methods.includes('google.com')) {
+          // User ko Google se login karwao
+          const result = await signInWithPopup(auth, googleProvider);
+
+          // Ab GitHub ko link kardo
+          await linkWithCredential(result.user, pendingCred);
+
+          alert("GitHub account linked successfully!");
+        }
+      } else {
+        console.error(error);
+      }
+    });
+}
 });
 
   
