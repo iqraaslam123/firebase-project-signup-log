@@ -1,7 +1,7 @@
 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
   
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider , signOut ,onAuthStateChanged} 
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider , signOut ,onAuthStateChanged , GithubAuthProvider} 
 from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
 
@@ -84,7 +84,7 @@ if(user && window.location.pathname.includes("welcome.html")){
 
 }
 else if(!user && window.location.pathname.includes("welcome.html")){
-window.location.href="welcome.html";
+window.location.href="login.html";
 }
 })
 
@@ -109,3 +109,20 @@ function setupPasswordToggle(inputId, toggleId, iconId) {
 setupPasswordToggle("login-password", "togglePasswordLogin", "eye-icon-login");
 setupPasswordToggle("signup-password", "togglePasswordSignup", "eye-icon-signup");
 
+// github login
+const githubProvider = new GithubAuthProvider();
+
+document.getElementById("github-btn").addEventListener("click", () => { 
+  signInWithPopup(auth, githubProvider)
+    .then((result) => {
+        alert("user signed in");
+        window.location.href = "welcome.html";
+    })
+   .catch((error) => {
+    console.error("GitHub Login Error:", error);
+    alert(error.message);
+});
+
+});
+
+  
